@@ -1,0 +1,9 @@
+users = (Id_user COUNTER, name VARCHAR(100), nickname VARCHAR(100), email VARCHAR(150), password VARCHAR(50), photo BLOB);
+Teacher = (id VARCHAR(50), #Id_user);
+Session = (Id_Session COUNTER, name VARCHAR(50), start_date DATE, end_date DATE);
+course = (Id_course COUNTER, name VARCHAR(50), content TEXT, start_date DATETIME, end_date DATETIME, #id*);
+score = (Id_score COUNTER, score DECIMAL(3,2));
+Student = (id VARCHAR(50), #Id_Session*, #Id_user);
+test = (Id_test COUNTER, type VARCHAR(50), #id, #Id_score, #Id_course*);
+contain = (#Id_Session, #Id_course);
+joinn = (#id, #Id_Session);
