@@ -1,0 +1,80 @@
+CREATE TABLE users(
+   Id_user INT AUTO_INCREMENT,
+   name VARCHAR(100),
+   nickname VARCHAR(100),
+   email VARCHAR(150),
+   password VARCHAR(50),
+   photo BLOB,
+   PRIMARY KEY(Id_user)
+);
+
+CREATE TABLE Teacher(
+   id VARCHAR(50),
+   Id_user INT NOT NULL,
+   PRIMARY KEY(id),
+   UNIQUE(Id_user),
+   FOREIGN KEY(Id_user) REFERENCES users(Id_user)
+);
+
+CREATE TABLE Session(
+   Id_Session INT AUTO_INCREMENT,
+   name VARCHAR(50),
+   start_date DATE,
+   end_date DATE,
+   PRIMARY KEY(Id_Session)
+);
+
+CREATE TABLE course(
+   Id_course INT AUTO_INCREMENT,
+   name VARCHAR(50),
+   content TEXT,
+   start_date DATETIME,
+   end_date DATETIME,
+   id VARCHAR(50),
+   PRIMARY KEY(Id_course),
+   FOREIGN KEY(id) REFERENCES Teacher(id)
+);
+
+CREATE TABLE score(
+   Id_score INT AUTO_INCREMENT,
+   score DECIMAL(3,2),
+   PRIMARY KEY(Id_score)
+);
+
+CREATE TABLE Student(
+   id VARCHAR(50),
+   Id_Session INT,
+   Id_user INT NOT NULL,
+   PRIMARY KEY(id),
+   UNIQUE(Id_user),
+   FOREIGN KEY(Id_Session) REFERENCES Session(Id_Session),
+   FOREIGN KEY(Id_user) REFERENCES users(Id_user)
+);
+
+CREATE TABLE test(
+   Id_test INT AUTO_INCREMENT,
+   type VARCHAR(50),
+   id VARCHAR(50) NOT NULL,
+   Id_score INT NOT NULL,
+   Id_course INT,
+   PRIMARY KEY(Id_test),
+   FOREIGN KEY(id) REFERENCES Teacher(id),
+   FOREIGN KEY(Id_score) REFERENCES score(Id_score),
+   FOREIGN KEY(Id_course) REFERENCES course(Id_course)
+);
+
+CREATE TABLE contain(
+   Id_Session INT,
+   Id_course INT,
+   PRIMARY KEY(Id_Session, Id_course),
+   FOREIGN KEY(Id_Session) REFERENCES Session(Id_Session),
+   FOREIGN KEY(Id_course) REFERENCES course(Id_course)
+);
+
+CREATE TABLE joinn(
+   id VARCHAR(50),
+   Id_Session INT,
+   PRIMARY KEY(id, Id_Session),
+   FOREIGN KEY(id) REFERENCES Teacher(id),
+   FOREIGN KEY(Id_Session) REFERENCES Session(Id_Session)
+);
